@@ -1,7 +1,6 @@
 <?php
 require 'function.php';
 require 'cek.php';
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -26,12 +25,12 @@ require 'cek.php';
         <!-- Latest compiled JavaScript -->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
 
-        <link href="css/styles.css" rel="stylesheet" />
+        <link href="../css/styles.css" rel="stylesheet" />
         <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
         <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-       <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-     
+    </head>
     <body class="sb-nav-fixed">
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
             <!-- Navbar Brand-->
@@ -69,75 +68,54 @@ require 'cek.php';
                 </nav>
             </div>
             <div id="layoutSidenav_content">
-            
-                  
-                   
+                <main>
                     <!-- mulai disini -->
                 <div class="io p-2">    
-                    <h1>Industri Kecil Menengah</h1>
+                    <h1>Kategori</h1>
                     <hr  style="border:2px solid black; width:80%;">
                 </div>
                 <div class="row px-3 py-1 m-0">
-                    <button type="button" class="btn btn-success col-md-2 m-2" data-bs-toggle="modal" data-bs-target="#tambah">Tambah</button>
-                    <table class="table  table-striped">
+                    <button class="btn btn-success col-md-2 m-2" data-bs-toggle="modal" data-bs-target="#tambah">Tambah</button>
+                    <table class="table col-md-10 table-striped">
                         <thead class="table-dark">
                             <tr>
-                        
-                            <th >No</th>
-                            <th >Nama Pemilik</th>
-                            <th >Nama Brand</th>
-                            <th >Kategori</th>
-                            <th >Logo</th>
-                            <th >Tahun Berdiri</th>
-                            <th >Alamat</th>
-                            <th >No. Telpon</th>
-                            <th >Aksi</th>
+                            <th scope="col">No</th>
+                            <th scope="col">Nama Kategori</th>
+                            <th scope="col">Aksi</th>
                             </tr>
                         </thead>
                         <tbody class="table-group-divider">
                         <?php
-                            $sql = mysqli_query($conn,"select * from ikm as i inner join kategori as k on i.idKategori = k.idKategori");
+                            $sql = mysqli_query($conn,"select * from kategori");
                     
                             $no=1;
                             while($data=mysqli_fetch_array($sql)){
                             
-                            
-                                $namapemilik = $data['namaPemilik'];
-                                $namabrand = $data['namaBrand'];
-                                $logo= $data['logo'];
-                                $kategori= $data['kategori'];
-                                $tahunberdiri = $data['tahunBerdiri'];
-                                $alamat = $data['alamat'];
-                                $notelp = $data['noTelp'];
-                                $idikm = $data['idIkm'];
+                                $idKategori = $data['idKategori'];
+                                $kategori = $data['kategori'];
+                             
                               
                            
 
                             ?>
                             <tr>
                             <th ><?=$no++?></th>
-                            <td><?=$namapemilik;?></td>
-                            <td><?=$namabrand;?></td>
                             <td><?=$kategori;?></td>
-                            <td><?=$logo;?></td>
-                            <td><?=$tahunberdiri;?></td>
-                            <td><?=$alamat;?></td>
-                            <td><?=$notelp;?></td>
+                         
                             <td>
-                                <a href="editikm.php?id=<?=$idikm;?>"><button class="btn btn-primary">Edit</button></a>
-                                <a href="hapusikm.php?id=<?=$idikm;?>"><button class="btn btn-danger">Hapus</button></a>
+                                <a href="editKat.php?id=<?=$idKategori;?>"><button class="btn btn-primary">Edit</button></a>
+                                <a href="hapuskat.php?id=<?=$idKategori;?>"><button class="btn btn-danger">Hapus</button></a>
                                 
-                                </form>
+                             
 
                             </td>
                         </tr>
                           <?php }?>      
-                          
                         </tbody>
                     </table>
                 </div>
                     <!-- akhir disini -->
-              
+                </main>
                 <footer class="py-4 bg-light mt-auto">
                     <div class="container-fluid px-4">
                         <div class="d-flex align-items-center justify-content-between small">
@@ -152,9 +130,7 @@ require 'cek.php';
                 </footer>
             </div>
         </div>
-       <!--MODAL -->
-
-
+       
 <!-- The Modal -->
 <div class="modal" id="tambah">
     <div class="modal-dialog modal-dialog-centered">
@@ -162,92 +138,32 @@ require 'cek.php';
                                                     
             <!-- Modal Header -->
             <div class="modal-header">
-            <h4 class="modal-title">Tambah Barang</h4>
+            <h4 class="modal-title">Tambah Kategori</h4>
             <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
                                                             
             <!-- Modal body -->
-            <form method="post" action="" enctype="multipart/form-data">
+            <form method="post" action="function.php">
                 <div class="modal-body">
                 <div class="form-grup">
-                <label for="namapemilik">Nama Pemilik :</label>
-                <input type="text" name="namapemilik" id="namapemilik"  class="form-control" required>
+                <label for="kategori">Nama Kategori :</label>
+                <input type="text" name="kategori" id="kategori"  class="form-control" required>
                 </div>
-                <div class="form-group">
-                <label for="namabrand">Nama Brand :</label>
-                <input type="text" name="namabrand" id="namabrand" class="form-control" required>
-                </div>
-
-                <div class="form-group">
-           
-                <label for="kategori">Kategori :</label>
-                <select name="kategori" class="form-control" required>
-                    <option value="">-- Pilih --</option>
-                    <?php
-                    $angkatan = $conn->query("select * from kategori");
-                    while ($row = $angkatan->fetch_assoc()) :
-                    ?>
-                        <option value="<?php echo $row['idKategori'] ?>"><?php echo  $row['kategori'] ?></option>
-                    <?php endwhile;?>
-                </select>
-           </div>
-                <div class="form-group">
-                <label for="logo">Logo :</label>
-                <input type="file" name="logo" id="logo"  class="form-control" required>
-                </div>
-               
-                <div class="form-group">
-                <label for="tahunberdiri">Tahun Berdiri :</label>
-                <input type="month" name="tahunberdiri" id="tahunberdiri" class="form-control" required>
-                </div>
-                <div class="form-group">
-                <label for="alamat">Alamat :</label>
-                <input type="text" name="alamat" id="alamat"  class="form-control" required>
-                </div>
-                <div class="form-group">
-                <label for="notelp">NO. Telpon :</label>
-                <input type="text" name="notelp" id="notelp" class="form-control" required>
-                </div>
+              
                 
                 <div class="form-group">
                 </div>
-                <button type="submit" class="btn btn-primary" name="tambahikm">Submit</button>
+                <button type="submit" class="btn btn-primary" name="tambahkate">Submit</button>
                 </div>
             </form>
                             
         </div>
     </div>
 </div>
-<?php
-if(isset($_POST['tambahikm'])){
-    $namapemilik = $_POST['namapemilik'];
-    $namabrand = $_POST['namabrand'];
-    $kategori = $_POST['kategori'];
-  
-    $tahunberdiri = $_POST['tahunberdiri'];
-    $alamat = $_POST['alamat'];
-    $notelp = $_POST['notelp'];
-    // hendel foto
-    $logo = $_FILES["logo"]["name"];
-    $logo_tmp = $_FILES["logo"]["tmp_name"];
-    if(move_uploaded_file($logo_tmp, "upload/$logo")){
-        echo "<script>alert('foto berhasil di upload')</script>";
-    }else{
-        echo "<script>alert('foto Gagal di upload')</script>";
-    }
-    
-   
-    
-    $addtotable = mysqli_query($conn, "insert into ikm(namaPemilik, namaBrand, idKategori, logo, tahunBerdiri, alamat, noTelp) values('$namapemilik', '$namabrand', '$kategori', '$logo', '$tahunberdiri', '$alamat', '$notelp')");
-    if($addtotable){
-        echo "<script>alert('Data berhasil di tambah')</script>";
-        echo "<script>location='ikm.php';</script>";
-    } else {
-        echo "<script>alert('Data Gagal di tambah')</script>";
-        echo "<script>location='ikm.php';</script>";
-    } 
-         
-};
-?>
+
+
+
 </body>
+
+
 </html>

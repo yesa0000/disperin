@@ -13,24 +13,23 @@ require 'cek.php';
         <title>Data Produk</title>
         <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
 
-        <!-- Latest compiled and minified CSS -->
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
 
-        <!-- jQuery library -->
-        <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.slim.min.js"></script>
+<!-- jQuery library -->
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.slim.min.js"></script>
 
-        <!-- Popper JS -->
-        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+<!-- Popper JS -->
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
 
-        <!-- Latest compiled JavaScript -->
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Latest compiled JavaScript -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
 
-        <link href="css/styles.css" rel="stylesheet" />
-        <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
-        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<link href="css/styles.css" rel="stylesheet" />
+<script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <body class="sb-nav-fixed">
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
             <!-- Navbar Brand-->
@@ -74,29 +73,50 @@ require 'cek.php';
                     <h1>Industri Kecil Menengah</h1>
                     <hr  style="border:2px solid black; width:80%;">
                 </div>
-                <div class="row px-3 py-1">
-                    <button class="btn btn-success col-md-2 m-2">Tambah</button>
+                <div class="row px-3 py-1 m-0">
+                    <button type="button" class="btn btn-success col-md-2 m-2" data-bs-toggle="modal" data-bs-target="#tambah">Tambah</button>
                     <table class="table  table-striped">
                         <thead class="table-dark">
                             <tr>
                             <th scope="col">No</th>
                             <th scope="col">Nama Produk</th>
                             <th scope="col">Nama Brand</th>
+                            <th scope="col">Deskripsi Produk</th>
                             <th scope="col">Aksi</th>
                             </tr>
                         </thead>
                         <tbody class="table-group-divider">
+                        <?php
+                            $sql = mysqli_query($conn,"select * from produk as p inner join ikm as i on p.idIkm=i.idIkm");
+                            
+
+                            $no=1;
+                            while($data=mysqli_fetch_array($sql)){
+                            
+                                $namaproduk = $data['namaProduk'];
+                                $idpro = $data['idProduk'];
+                                $namaBrand = $data['namaBrand'];
+                                $deskripsi= $data['deskripsiProduk'];
+                            
+                              
+
+                            ?>
                             <tr>
-                            <th scope="row">1</th>
-                            <td>Mark</td>
-                            <td>Otto</td>
+                            <th ><?=$no++?></th>
+                            <td><?=$namaproduk;?></td>
+                            <td><?=$namaBrand;?></td>
+                            
+                            <td><?=$deskripsi;?></td>
+
                             <td>
-                                <button class="btn btn-primary">Edit</button>
-                                <button class="btn btn-danger">Hapus</button>
+                                <a href="editPro.php?id=<?=$idpro;?>"><button class="btn btn-primary">Edit</button></a>
+                                <a href="hapusPro.php?id=<?=$idpro;?>"><button class="btn btn-danger">Hapus</button></a>
+                                
+                                </form>
 
                             </td>
-                            </tr>
-                          
+                        </tr>
+                          <?php }?>   
                         </tbody>
                     </table>
                 </div>
@@ -117,5 +137,52 @@ require 'cek.php';
             </div>
         </div>
        
+<!-- The Modal -->
+<div class="modal" id="tambah">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+                                                    
+            <!-- Modal Header -->
+            <div class="modal-header">
+            <h4 class="modal-title">Tambah Produk</h4>
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+                                                            
+            <!-- Modal body -->
+            <form method="post" action="function.php">
+                <div class="modal-body">
+                <div class="form-grup">
+                <label for="namaproduk">Nama Produk :</label>
+                <input type="text" name="namaproduk" id="namaproduk"  class="form-control" required>
+                </div>
+                <div class="form-group">
+           
+                <label for="namabrand">Nama Brand :</label>
+                <select name="namabrand" class="form-control" required>
+                            <option value="">-- Pilih --</option>
+                            <?php
+                            $angkatan = $conn->query("select * from ikm");
+                            while ($row = $angkatan->fetch_assoc()) :
+                            ?>
+                                <option value="<?php echo $row['idIkm'] ?>"><?php echo  $row['namaBrand'] ?></option>
+                            <?php endwhile;?>
+                        </select>
+                </div>
+            
+                <div class="form-group">
+                <label for="deskripsi">Deskripsi :</label>
+                <textarea type="text" name="deskripsi" id="deskripsi"  class="form-control" required></textarea>
+                </div>
+               
+                
+                <div class="form-group">
+                </div>
+                <button type="submit" class="btn btn-primary" name="tambahpro">Submit</button>
+                </div>
+            </form>
+                            
+        </div>
+    </div>
+</div>
 </body>
 </html>

@@ -26,7 +26,7 @@ require 'cek.php';
         <!-- Latest compiled JavaScript -->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
 
-        <link href="css/styles.css" rel="stylesheet" />
+        <link href="../css/styles.css" rel="stylesheet" />
         <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
         <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
@@ -69,7 +69,10 @@ require 'cek.php';
                 </nav>
             </div>
             <div id="layoutSidenav_content">
-            
+            <?php
+                     if(isset($_SESSION["user"])) { 
+                        $iduser = $_SESSION['user']['idAkun'];
+                    }?>
                   
                    
                     <!-- mulai disini -->
@@ -78,63 +81,12 @@ require 'cek.php';
                     <hr  style="border:2px solid black; width:80%;">
                 </div>
                 <div class="row px-3 py-1 m-0">
-                    <button type="button" class="btn btn-success col-md-2 m-2" data-bs-toggle="modal" data-bs-target="#tambah">Tambah</button>
-                    <table class="table  table-striped">
-                        <thead class="table-dark">
-                            <tr>
-                        
-                            <th >No</th>
-                            <th >Nama Pemilik</th>
-                            <th >Nama Brand</th>
-                            <th >Kategori</th>
-                            <th >Logo</th>
-                            <th >Tahun Berdiri</th>
-                            <th >Alamat</th>
-                            <th >No. Telpon</th>
-                            <th >Aksi</th>
-                            </tr>
-                        </thead>
-                        <tbody class="table-group-divider">
-                        <?php
-                            $sql = mysqli_query($conn,"select * from ikm as i inner join kategori as k on i.idKategori = k.idKategori");
-                    
-                            $no=1;
-                            while($data=mysqli_fetch_array($sql)){
-                            
-                            
-                                $namapemilik = $data['namaPemilik'];
-                                $namabrand = $data['namaBrand'];
-                                $logo= $data['logo'];
-                                $kategori= $data['kategori'];
-                                $tahunberdiri = $data['tahunBerdiri'];
-                                $alamat = $data['alamat'];
-                                $notelp = $data['noTelp'];
-                                $idikm = $data['idIkm'];
-                              
-                           
+                   
+                    <?php
+                        if(){
 
-                            ?>
-                            <tr>
-                            <th ><?=$no++?></th>
-                            <td><?=$namapemilik;?></td>
-                            <td><?=$namabrand;?></td>
-                            <td><?=$kategori;?></td>
-                            <td><?=$logo;?></td>
-                            <td><?=$tahunberdiri;?></td>
-                            <td><?=$alamat;?></td>
-                            <td><?=$notelp;?></td>
-                            <td>
-                                <a href="editikm.php?id=<?=$idikm;?>"><button class="btn btn-primary">Edit</button></a>
-                                <a href="hapusikm.php?id=<?=$idikm;?>"><button class="btn btn-danger">Hapus</button></a>
-                                
-                                </form>
-
-                            </td>
-                        </tr>
-                          <?php }?>      
-                          
-                        </tbody>
-                    </table>
+                        }
+                    ?>
                 </div>
                     <!-- akhir disini -->
               

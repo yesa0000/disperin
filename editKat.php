@@ -1,5 +1,4 @@
 <?php
-
 require 'function.php';
 require 'cek.php';
 ?>
@@ -70,54 +69,61 @@ require 'cek.php';
             </div>
             <div id="layoutSidenav_content">
                 <main>
-                
-                    <?php
-                        if(isset($_SESSION["user"])) { 
-                            $namah1 = $_SESSION['user']['nama'];
-                        }
-                        $query= mysqli_query($conn,"SELECT * FROM ikm");
-                        $ikm= mysqli_num_rows($query);
-                        
-                        $query= mysqli_query($conn,"SELECT * FROM kategori");
-                        $kategori= mysqli_num_rows($query);
-
-                        $query= mysqli_query($conn,"SELECT * FROM produk");
-                        $produk= mysqli_num_rows($query);
-                    ?>
-                        <h1 class="m-4">Selamat datang <?=$namah1;?></h1>
-                    <div class="row p-5 justify-content-around m-0">
-                        <div class="col-md-3 ">
-                            <div class="card bg-dark text-light" style="width: 18rem;">
-                                <div class="card-body">
-                                    <h5 class="card-title">Jumlah IKM </h5>
-                                    <h4 class="card-subtitle mb-2 text-body-secondary"><?=$ikm?></h4>
-                                    <a href="ikm.php" class="card-link">Kunjungi</a>
-                          
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-3 ">
-                            <div class="card bg-dark text-light" style="width: 18rem;">
-                                <div class="card-body">
-                                    <h5 class="card-title">Jumlah Kategiri</h5>
-                                    <h4 class="card-subtitle mb-2 text-body-secondary"><?=$kategori?></h4>
-                                    <a href="kategori.php" class="card-link">Kunjungi</a>
-                          
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-3 ">
-                            <div class="card bg-dark text-light" style="width: 18rem;">
-                                <div class="card-body">
-                                    <h5 class="card-title">Jumlah Produk</h5>
-                                    <h4 class="card-subtitle mb-2 text-body-secondary"><?=$produk?></h4>
-                                    <a href="produk.php" class="card-link">Kunjungi</a>
-                          
-                                </div>
-                            </div>
+                <?php
+$ambil = $conn->query("SELECT * FROM kategori WHERE idKategori='$_GET[id]'");
+$data = $ambil->fetch_assoc();
+?>
+<div class="row m-0">
+    <div class="col-md-12 mb-4">
+        <div class="card shadow mb-4">
+            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                <h6 class="m-0 font-weight-bold text-primary">Ubah mahasiswa</h6>
+            </div>
+            <div class="card-body">
+                <form method="post" class="form-horizontal" enctype="multipart/form-data">
+                   
+                    <div class="form-group">
+                        <label class="control-label">Nama Kategori</label>
+                        <input type="text" name="kategori" class="form-control" value="<?= $data['kategori'] ?>" required>
+                    </div>
+              
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <br>
+                            <button class="btn btn-primary float-right" name="simpan">Simpan</button>
                         </div>
                     </div>
-                        
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<?php
+if (isset($_POST["simpan"])) {
+  
+    $kategori = $_POST['kategori'];
+ 
+
+
+    $sql = "UPDATE kategori SET
+       
+            
+                kategori = '$kategori'
+        
+         
+            WHERE idKategori = '$_GET[id]'";
+    $conn->query($sql) or die(mysqli_error($conn));
+
+    echo "<script>alert('Data berhasil di ubah')</script>";
+    echo "<script>location='kategori.php';</script>";
+}
+?> 
+
+
+
+
+                
                 </main>
                 <footer class="py-4 bg-light mt-auto">
                     <div class="container-fluid px-4">
@@ -195,3 +201,15 @@ require 'cek.php';
                                     
 </body>
 </html>
+  <!-- <div class="form-group">
+                        <label class="control-label">Alamat</label>
+                        <select name="idangkatan" class="form-control" required>
+                            <option value="">-- Pilih --</option>
+                            <?php
+                            $angkatan = $koneksi->query("SELECT * FROM `angkatan` order by `tahun` asc");
+                            while ($row = $angkatan->fetch_assoc()) :
+                            ?>
+                                <option value="<?php echo $row['idangkatan'] ?>" <?= $data['idangkatan'] == $row['idangkatan'] ? 'selected' : ''; ?>><?php echo  $row['tahun'] ?></option>
+                            <?php endwhile; ?>
+                        </select>
+                    </div> -->

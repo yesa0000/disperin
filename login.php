@@ -1,4 +1,5 @@
 <?php
+
 require 'function.php';
 
 //Cek Login, terdaftar apa kagak
@@ -7,25 +8,29 @@ if(isset($_POST['login'])){
     $password = $_POST['Password'];
 
     //cocokin dengan databse,cari.. ada atau engga tuh data
-    $cekdatabase = mysqli_query($conn, "SELECT * FROM user where email='$email'and password='$password'");
+    $cekdatabase = mysqli_query($conn, "SELECT * FROM user where email='$email'and password='$password'  limit 1");
     //hitung jumlah data
-    $hitung = mysqli_num_rows($cekdatabase);
-
-    if($hitung>0){
-        $_SESSION['log'] = 'True';
-        header('location:beranda.php'); 
-        debug_to_console("bener");
+    $akunyangcocok = $cekdatabase->num_rows;
+   
+    if ($akunyangcocok == 1) {
+        $akun = $cekdatabase->fetch_assoc();   
+        if($akun['is_admin'] == 1){
+            $_SESSION['user'] =$akun;
+            echo "<script> alert('Anda sukses login sebagai admin');</script>";
+            header('location:beranda.php');
+        }else{
+            $_SESSION['user'] = $akun;
+            echo "<script> alert('Anda sukses login sebagai user');</script>";
+            header('location:user/beranda.php');
+        }
     } else {
+        echo "<script> alert('gagal login');</script>";
         header('location:login.php');
-        debug_to_console("salah");
-    };
+     
+    }
 };
 
-if(!isset($_SESSION['log'])){
 
-} else{
-    header('location:login.php');
-}
 
 ?>
 <!DOCTYPE html>
