@@ -99,7 +99,7 @@ require 'cek.php';
                         <div class="col-md-3 ">
                             <div class="card bg-dark text-light" style="width: 18rem;">
                                 <div class="card-body">
-                                    <h5 class="card-title">Jumlah Kategiri</h5>
+                                    <h5 class="card-title">Jumlah Kategori</h5>
                                     <h4 class="card-subtitle mb-2 text-body-secondary"><?=$kategori?></h4>
                                     <a href="kategori.php" class="card-link">Kunjungi</a>
                           

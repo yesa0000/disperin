@@ -40,14 +40,16 @@
 <div class="row m-0  p-4 align-items-center justify-content-center bg-dark text-light ">
   <div class="col-md-5 m-5">
     <h2>VISI</h2>
-    <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quaerat quam illo amet aperiam, suscipit facere deserunt deleniti libero assumenda quibusdam in placeat. Ullam a eum suscipit atque quisquam! Temporibus, molestiae.</p>
+    <p>Visi Dinas Perindustrian Sumatera Selatan adalah “Sumatera Selatan Maju untuk Semua.</p>
   </div>
   <div class="col-md-5">
     <h2>MISI</h2>
     <ul>
-      <li>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit, minima.</li>
-      <li>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit, minima.</li>
-      <li>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit, minima.</li>
+      <li>1.Mengatasi pengangguran dan kemiskinan baik di perkotaan maupun di pedesaan.</li>
+      <li>2.Meningkatkan kualitas Sumber Daya Manusia (SDM), baik laki-laki maupun perempuan, yang sehat, berpendidikan, profesional .</li>
+      <li>3.Mewujudkan tata kelola pemerintahan yang bebas Korupsi, Kolusi dan Nepotisme, dengan mengedepankan transparansi dan akuntabilitas yang didukung aparatur pemerintah yang jujur, berintegritas, profesional dan responsif.</li>
+      <li>4.Membangun dan meningkatkan kualitas dan kuantitas infrastruktur, termasuk infrastruktur dasar guna percepatan pembangunan wilayah pedalaman & perbatasan. Untuk memperlancar arus barang dan mobilitas penduduk, serta mewujudkan daya saing daerah dengan mempertimbangkan pemerataan dan keseimbangan daerah.</li>
+      <li>5.Meningkatkan kehidupan beragama, seni, dan budaya, untuk membangun karakter kehidupan sosial yang agamis & berbudaya, dengan ditopang fisik yang sehat melalui kegiatan olahraga, sedangkan pengembangan pariwisata berorientasi pariwisata religius.</li>
     </ul>
   </div>
 </div>

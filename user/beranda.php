@@ -1,7 +1,7 @@
 <?php
 
-require 'function.php';
-require 'cek.php';
+require '../function.php';
+require '../cek.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -52,10 +52,7 @@ require 'cek.php';
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Industri Kecil Menengah
                             </a>
-                            <a class="nav-link" href="kategori.php"> 
-                                <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-                                Kategori
-                            </a>
+                        
                             <a class="nav-link" href="produk.php">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Produk

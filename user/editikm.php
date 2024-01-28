@@ -1,6 +1,6 @@
 <?php
-require 'function.php';
-require 'cek.php';
+require '../function.php';
+require '../cek.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -154,21 +154,18 @@ if (isset($_POST["simpan"])) {
 
 
     // Check if a new image is uploaded
-    if (!empty($_FILES["logo"]["name"])) {
-        // Handle file upload
-        $logo = $_FILES["logo"]["name"];
-        $logo_tmp = $_FILES["logo"]["tmp_name"];
-        move_uploaded_file($logo_tmp, "upload/" . $logo);
-        echo "<script>alert('foto baru di upload')</script>";
-    } else {
-        // No new image uploaded, retain the old image
-        $queryImage = "SELECT logo FROM ikm WHERE idIkm='$_GET[id]'";
-        $resultImage = mysqli_query($conn, $queryImage);
-        $rowImage = mysqli_fetch_assoc($resultImage);
-        $logo = $rowImage['logo'];
-      
-      
-    }
+      if (!empty($_FILES["logo"]["name"])) {
+                        // Handle file upload
+                    $uploadDir = 'uploads/';  // Ganti dengan nama folder yang diinginkan
+                        $logo = $uploadDir . basename($_FILES['logo']['name']);
+                        move_uploaded_file($_FILES['logo']['tmp_name'], $logo);
+                    } else {
+                        // No new image uploaded, retain the old image
+                        $queryImage = "SELECT logo FROM ikm WHERE idIkm='$_GET[id]'";
+                        $resultImage = mysqli_query($conn, $queryImage);
+                        $rowImage = mysqli_fetch_assoc($resultImage);
+                        $logo = $rowImage['logo'];
+                    }
     $sql = "UPDATE ikm SET
        
             

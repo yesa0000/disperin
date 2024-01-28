@@ -102,6 +102,11 @@ $data = $ambil->fetch_assoc();
                         <label class="control-label">Deskripsi</label>
                         <input type="text" name="deskripsiProduk" class="form-control" value="<?= $data['deskripsiProduk'] ?>" required>
                     </div>
+
+                     <div class="form-group">
+                            <label for="fotoproduk" class="form-label">Foto Produk</label>
+                            <input type="file" name="fotoproduk" id="fotoproduk" class="form-control" >
+                        </div>
                     
                     <div class="col-md-12">
                         <div class="form-group">
@@ -124,25 +129,29 @@ if (isset($_POST["simpan"])) {
 
 
 
-    // Check if a new image is uploaded
-    // if (!empty($_FILES["foto_ktm_update"]["name"])) {
-    //     // Handle file upload
-    //     $foto_ktm = $_FILES["foto_ktm_update"]["name"];
-    //     $foto_ktm_tmp = $_FILES["foto_ktm_update"]["tmp_name"];
-    //     move_uploaded_file($foto_ktm_tmp, "upload/" . $foto_ktm);
-    // } else {
-    //     // No new image uploaded, retain the old image
-    //     $queryImage = "SELECT foto_ktm FROM mahasiswa WHERE idmahasiswa='$_GET[id]'";
-    //     $resultImage = mysqli_query($koneksi, $queryImage);
-    //     $rowImage = mysqli_fetch_assoc($resultImage);
-    //     $foto_ktm = $rowImage['foto_ktm'];
-    // }
+   
+    if (!empty($_FILES["fotoproduk"]["name"])) {
+        // Handle file upload
+       $uploadDir = 'uploads/';  // Ganti dengan nama folder yang diinginkan
+        $fotoProduk = $uploadDir . basename($_FILES['fotoproduk']['name']);
+        move_uploaded_file($_FILES['fotoproduk']['tmp_name'], 'user/'.$fotoProduk);
+    } else {
+        // No new image uploaded, retain the old image
+        $queryImage = "SELECT fotoproduk FROM produk WHERE idProduk='$_GET[id]'";
+        $resultImage = mysqli_query($conn, $queryImage);
+        $rowImage = mysqli_fetch_assoc($resultImage);
+        $fotoProduk = $rowImage['fotoproduk'];
+    }
+
+   
+    
     $sql = "UPDATE produk SET
        
             
                 namaProduk = '$namaProduk',
                 deskripsiProduk = '$deskripsi',
-                idIkm = '$namaBrand'
+                idIkm = '$namaBrand',
+                fotoproduk = '$fotoProduk'
          
             WHERE idProduk = '$_GET[id]'";
     $conn->query($sql) or die(mysqli_error($conn));

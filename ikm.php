@@ -79,7 +79,37 @@ require 'cek.php';
                 </div>
                 <div class="row px-3 py-1 m-0">
                     <button type="button" class="btn btn-success col-md-2 m-2" data-bs-toggle="modal" data-bs-target="#tambah">Tambah</button>
-                    <table class="table  table-striped">
+                     <div class="col-md-3 ms-auto">
+                    <form class="row justify-content-around" action="" method="GET">
+                        
+                            <input type="text" name="tblCari" id="tblCari" class="form-control col-md-8" placeholder="Search">
+                            <button type="submit"  class="btn btn-primary col-md-3">Cari</button>
+                       
+                    </form>
+                    </div>
+                  
+                        <?php
+                             
+                            if(isset($_GET['tblCari'])){
+                                $kunci = $_GET['tblCari'];
+                                if($kunci == null){
+                                   $sql = mysqli_query($conn,"select * from ikm as i inner join kategori as k on i.idKategori = k.idKategori");
+                                }else{
+                                    $sql = mysqli_query($conn,"select * from ikm as i inner join kategori as k on i.idKategori = k.idKategori where i.namaPemilik like '%$kunci%' OR k.kategori like '%$kunci%' OR i.namaBrand like '%$kunci%'");
+                                }
+                            }else{
+                                 $sql = mysqli_query($conn,"select * from ikm as i inner join kategori as k on i.idKategori = k.idKategori");
+                            }
+    
+                            $no=1;
+                            
+                            if (mysqli_num_rows($sql) > 0){
+                    
+                            
+
+
+                            ?>
+                            <table class="table  table-striped">
                         <thead class="table-dark">
                             <tr>
                         
@@ -95,10 +125,8 @@ require 'cek.php';
                             </tr>
                         </thead>
                         <tbody class="table-group-divider">
-                        <?php
-                            $sql = mysqli_query($conn,"select * from ikm as i inner join kategori as k on i.idKategori = k.idKategori");
-                    
-                            $no=1;
+
+                            <?php
                             while($data=mysqli_fetch_array($sql)){
                             
                             
@@ -119,7 +147,7 @@ require 'cek.php';
                             <td><?=$namapemilik;?></td>
                             <td><?=$namabrand;?></td>
                             <td><?=$kategori;?></td>
-                            <td><?=$logo;?></td>
+                            <td><img style="width:300px;" src="user/<?=$logo;?>" alt=""></td>
                             <td><?=$tahunberdiri;?></td>
                             <td><?=$alamat;?></td>
                             <td><?=$notelp;?></td>
@@ -135,6 +163,16 @@ require 'cek.php';
                           
                         </tbody>
                     </table>
+                     <?php 
+                     }
+                            else{
+                               ?>
+                                    <div class="col-12 d-flex justify-content-center mt-5">
+                                        <h1>IKM Tidak Ada</h1>
+                                    </div>
+                               <?php
+                            }
+                    ?>
                 </div>
                     <!-- akhir disini -->
               
@@ -228,9 +266,9 @@ if(isset($_POST['tambahikm'])){
     $alamat = $_POST['alamat'];
     $notelp = $_POST['notelp'];
     // hendel foto
-    $logo = $_FILES["logo"]["name"];
+    $logo = 'uploads/'.$_FILES["logo"]["name"];
     $logo_tmp = $_FILES["logo"]["tmp_name"];
-    if(move_uploaded_file($logo_tmp, "upload/$logo")){
+    if(move_uploaded_file($logo_tmp, "user/". $logo)){
         echo "<script>alert('foto berhasil di upload')</script>";
     }else{
         echo "<script>alert('foto Gagal di upload')</script>";

@@ -1,6 +1,6 @@
 <?php
-require 'function.php';
-require 'cek.php';
+require '../function.php';
+require '../cek.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -40,6 +40,7 @@ require 'cek.php';
         </nav>
         <div id="layoutSidenav">
             <div id="layoutSidenav_nav">
+                <!-- ini kodingan untuk navbar -->
                 <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
                     <div class="sb-sidenav-menu">
                         <div class="nav">
@@ -50,10 +51,6 @@ require 'cek.php';
                             <a class="nav-link" href="ikm.php">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Industri Kecil Menengah
-                            </a>
-                            <a class="nav-link" href="kategori.php"> 
-                                <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-                                Kategori
                             </a>
                             <a class="nav-link" href="produk.php">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
@@ -67,82 +64,81 @@ require 'cek.php';
                     
                 </nav>
             </div>
-            <div id="layoutSidenav_content">
-                <main>
+              <div id="layoutSidenav_content">
+            <main>
                 <?php
-$ambil = $conn->query("SELECT * FROM produk WHERE idProduk='$_GET[id]'");
-$data = $ambil->fetch_assoc();
-?>
-<div class="row m-0">
-    <div class="col-md-12 mb-4">
-        <div class="card shadow mb-4">
-            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                <h6 class="m-0 font-weight-bold text-primary">Ubah Produk</h6>
-            </div>
-            <div class="card-body">
-                <form method="post" class="form-horizontal" enctype="multipart/form-data">
-                   
-                    <div class="form-group">
-                        <label class="control-label">Nama Pemilik</label>
-                        <input type="text" name="namaProduk" class="form-control" value="<?= $data['namaProduk'] ?>" required>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label">Nama Brand</label>
-                        <select name="namaBrand" class="form-control" required>
-                            
-                            <?php
-                            $ikm = $conn->query("SELECT * FROM ikm");
-                            while ($row = $ikm->fetch_assoc()) :
-                            ?>
-                                <option value="<?php echo $row['idIkm'] ?>" <?= $row['idIkm'] == $data['idIkm'] ? 'selected' : ''; ?>><?php echo  $row['namaBrand'] ?></option>
-                            <?php endwhile; ?>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label">Deskripsi</label>
-                        <input type="text" name="deskripsiProduk" class="form-control" value="<?= $data['deskripsiProduk'] ?>" required>
-                    </div>
-                    
-                    <div class="col-md-12">
-                        <div class="form-group">
-                            <br>
-                            <button class="btn btn-primary float-right" name="simpan">Simpan</button>
+                $ambil = $conn->query("SELECT * FROM produk WHERE idProduk='$_GET[id]'");
+                $data = $ambil->fetch_assoc();
+                ?>
+                <div class="row m-0">
+                    <div class="col-md-12 mb-4">
+                        <div class="card shadow mb-4">
+                            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                <h6 class="m-0 font-weight-bold text-primary">Ubah Produk</h6>
+                            </div>
+                            <div class="card-body">
+                                <form method="post" class="form-horizontal" enctype="multipart/form-data">
+                                    <div class="form-group">
+                                        <label class="control-label">Nama Produk</label>
+                                        <input type="text" name="namaProduk" class="form-control" value="<?= $data['namaProduk'] ?>" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label">Deskripsi</label>
+                                        <input type="text" name="deskripsiProduk" class="form-control" value="<?= $data['deskripsiProduk'] ?>" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label">Foto Produk</label>
+                                        <input type="file" id='fotoproduk' name="fotoproduk" class="form-control">
+                                        <?php
+                                        if ($data['fotoproduk']) {
+                                            echo "<p class='mt-2'><img src='{$data['fotoproduk']}' alt='Foto Produk' style='max-width: 100px;'></p>";
+                                        }
+                                        ?>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <br>
+                                            <button class="btn btn-primary float-right" name="simpan">Simpan</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
                         </div>
                     </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
+                </div>
 
-<?php
-if (isset($_POST["simpan"])) {
+                <?php
+                if (isset($_POST["simpan"])) {
   
-    $namaProduk = $_POST['namaProduk'];
-    $namaBrand = $_POST['namaBrand'];
-    $deskripsi = $_POST['deskripsiProduk'];
+                    $namaProduk = $_POST['namaProduk'];
+                 
+                    $deskripsi = $_POST['deskripsiProduk'];
 
 
 
-    // Check if a new image is uploaded
-    // if (!empty($_FILES["foto_ktm_update"]["name"])) {
-    //     // Handle file upload
-    //     $foto_ktm = $_FILES["foto_ktm_update"]["name"];
-    //     $foto_ktm_tmp = $_FILES["foto_ktm_update"]["tmp_name"];
-    //     move_uploaded_file($foto_ktm_tmp, "upload/" . $foto_ktm);
-    // } else {
-    //     // No new image uploaded, retain the old image
-    //     $queryImage = "SELECT foto_ktm FROM mahasiswa WHERE idmahasiswa='$_GET[id]'";
-    //     $resultImage = mysqli_query($koneksi, $queryImage);
-    //     $rowImage = mysqli_fetch_assoc($resultImage);
-    //     $foto_ktm = $rowImage['foto_ktm'];
-    // }
-    $sql = "UPDATE produk SET
+                
+                    if (!empty($_FILES["fotoproduk"]["name"])) {
+                        // Handle file upload
+                    $uploadDir = 'uploads/';  // Ganti dengan nama folder yang diinginkan
+                        $fotoProduk = $uploadDir . basename($_FILES['fotoproduk']['name']);
+                        move_uploaded_file($_FILES['fotoproduk']['tmp_name'], $fotoProduk);
+                    } else {
+                        // No new image uploaded, retain the old image
+                        $queryImage = "SELECT fotoproduk FROM produk WHERE idProduk='$_GET[id]'";
+                        $resultImage = mysqli_query($conn, $queryImage);
+                        $rowImage = mysqli_fetch_assoc($resultImage);
+                        $fotoProduk = $rowImage['fotoproduk'];
+                    }
+
+                
+                    
+                    $sql = "UPDATE produk SET
        
             
                 namaProduk = '$namaProduk',
                 deskripsiProduk = '$deskripsi',
-                idIkm = '$namaBrand'
+          
+                fotoproduk = '$fotoProduk'
          
             WHERE idProduk = '$_GET[id]'";
     $conn->query($sql) or die(mysqli_error($conn));
@@ -150,14 +146,10 @@ if (isset($_POST["simpan"])) {
     echo "<script>alert('Data berhasil di ubah')</script>";
     echo "<script>location='produk.php';</script>";
 }
-?> 
+                ?>
 
-
-
-
-                
-                </main>
-                <footer class="py-4 bg-light mt-auto">
+            </main>
+            <footer class="py-4 bg-light mt-auto">
                     <div class="container-fluid px-4">
                         <div class="d-flex align-items-center justify-content-between small">
                             <div class="text-muted">Copyright &copy; Your Website 2023</div>

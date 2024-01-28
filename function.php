@@ -2,7 +2,7 @@
 session_start();
 
 //membuat koneksi ke database
-$conn = mysqli_connect("localhost:3308","root","","dbdisperin");
+$conn = mysqli_connect("localhost","root","","dbdisperin");
 
 
 if(isset($_POST['tambahkate'])){
@@ -24,10 +24,15 @@ if(isset($_POST['tambahpro'])){
     $namaproduk = $_POST['namaproduk'];
     $namabrand = $_POST['namabrand'];
     $deskripsi = $_POST['deskripsi'];
+    $kategori = $_POST['kategori'];
+
+         $uploadDir = 'uploads/';  // Ganti dengan nama folder yang diinginkan
+        $fotoProduk = $uploadDir . basename($_FILES['fotoproduk']['name']);
+        move_uploaded_file($_FILES['fotoproduk']['tmp_name'], 'user/'.$fotoProduk);
 
    
     
-    $addtotable = mysqli_query($conn, "insert into produk(namaProduk, idIkm, deskripsiProduk) values('$namaproduk', '$namabrand', '$deskripsi')");
+    $addtotable = mysqli_query($conn, "insert into produk(namaProduk, idIkm, deskripsiProduk, kategori, fotoproduk) values('$namaproduk', '$namabrand', '$deskripsi', '$kategori','$fotoProduk')");
     if($addtotable){
         header('location:produk.php');
     } else {
@@ -36,6 +41,8 @@ if(isset($_POST['tambahpro'])){
     } 
          
 };
+
+
 
 
 // //Menambahkan barang masuk
@@ -118,8 +125,6 @@ if(isset($_POST['tambahpro'])){
 //         header('location:index.php');
 //     }
 // };
-
-
 
 
 
